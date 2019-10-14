@@ -1,10 +1,11 @@
 let b;
+const gridSize = 63;
 function setup() {
   createCanvas(windowWidth, windowHeight - 4);
   background(220);
   stroke(0);
   fill(255);
-  b = new GameBoard(81, 81);
+  b = new GameBoard(gridSize, gridSize);
 }
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight - 4);
@@ -13,7 +14,10 @@ function windowResized() {
 }
 function draw() {
   b.Draw();
-  noLoop();
+  // noLoop();
+  if (frameCount % 60 == 0) {
+    b.Bisect();
+  }
 }
 function clamp(num, min, max) {
   return num <= min ? min : num >= max ? max : num;
