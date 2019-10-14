@@ -1,11 +1,12 @@
 let b;
+let i = 0;
 const gridSize = 63;
 function setup() {
   createCanvas(windowWidth, windowHeight - 4);
   background(220);
   stroke(0);
   fill(255);
-  b = new GameBoard(gridSize, gridSize);
+  b = new GameBoard(gridSize);
 }
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight - 4);
@@ -13,9 +14,9 @@ function windowResized() {
   draw();
 }
 function draw() {
+  i++
   b.Draw();
-  // noLoop();
-  if (frameCount % 60 == 0) {
+  if (i % 60 == 0) {
     b.Bisect();
   }
 }
