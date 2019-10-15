@@ -1,25 +1,25 @@
 let b;
 let i = 0;
-const gridPower = 5;
+const gridPower = 8;
 function setup() {
-  createCanvas(windowWidth, windowHeight - 4);
+  createCanvas(min(windowWidth, windowHeight), min(windowWidth, windowHeight) - 4);
   background(220);
-  stroke(0);
+  noStroke();
   fill(255);
   b = new GameBoard(gridPower);
 }
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight - 4);
+  resizeCanvas(min(windowWidth, windowHeight), min(windowWidth, windowHeight) - 4);
   background(220);
   draw();
 }
 function draw() {
-  b.Draw();
-  b.Update();
+  b.Draw(false);
+  b.Subdivide();
 }
-function mouseClicked() {
-  b.Update();
-}
+// function mouseClicked() {
+//   b.Update();
+// }
 function clamp(num, min, max) {
   return num <= min ? min : num >= max ? max : num;
 }

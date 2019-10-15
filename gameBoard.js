@@ -16,7 +16,7 @@ class GameBoard {
         this.queue = [];
         this.queue.push(new SubBoard(0, 0, this.size + 1, this.size + 1, random() > .5, 0));
     }
-    Update() {
+    Subdivide() {
         // print("cutting")
         if (this.queue.length > 0) {
             const q = this.queue.shift();
