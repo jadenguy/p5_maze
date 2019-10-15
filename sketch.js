@@ -1,6 +1,6 @@
 let b;
 let i = 0;
-const gridPower = 8;
+const gridPower = 6;
 function setup() {
   createCanvas(min(windowWidth, windowHeight), min(windowWidth, windowHeight) - 4);
   background(220);
@@ -14,7 +14,7 @@ function windowResized() {
   draw();
 }
 function draw() {
-  b.Draw(false);
+  b.Draw();
   b.Subdivide();
 }
 // function mouseClicked() {
