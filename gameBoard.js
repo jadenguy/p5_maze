@@ -1,38 +1,60 @@
+const fillBool = false;
 class GameBoard {
     constructor(size) {
-        this.size = size;
-        this.arr = Array.from(Array(size), () => new Array(size).fill(false));
-        this.bDim = 1;
-        this.bOp = 1;
+        this.size = pow(2, size) - 1;
+        this.arr = Array.from(Array(this.size), () => new Array(this.size).fill(fillBool));
+        this.bOp = 0;
     }
-    Bisect() {
-        const dividers = pow(2, this.bOp);
-        const colDelta = (this.size + 1) / dividers;
-        if (colDelta > 1) {
-            for (let o = 1; o < dividers; o += 2) {
-                for (let i = 0; i < this.size; i++) {
-                    let x, y;
-                    if (this.bDim % 2 == 0) {
-                        x = colDelta * o - 1;
-                        y = i;
-                    }
-                    else {
-                        y = colDelta * o - 1;
-                        x = i;
-                    }
-                    this.arr[x][y] = true;
+    Update() {
+        let chunk = (this.size) / pow(2, floor(this.bOp / 2))
+        if (chunk > 4 || (chunk == 4 && this.bOp % 2 == 0)) {
+            let w = chunk, h = chunk;
+            if (this.bOp % 2 != 0) {
+                w /= 2;
+            }
+            // print(w, h, this.size / w* this.size / h);
+            for (let x = 0; x < this.size; x += w) {
+                for (let y = 0; y < this.size; y += h) {
+                    // print(x, y, w, h, this.bOp);
+                    this.Bisect(x, y, w, h);
                 }
             }
-        }
-        if (this.bDim % 2 == 0) {
             this.bOp++;
         }
-        this.bDim++;
+        // print(chunk);
+    }
+    Bisect(x, y, w, h) {
+        const rand = random();
+        const lrSplit = w != h;
+        // print('dividing', '')
+        i = 0;
+        if (lrSplit) {
+            const leaveAlone = floor(map(rand, 0, 1, x + 1, x + w - 1));
+            for (let xIndex = x; xIndex < x + w; xIndex++) {
+                const yIndex = y + h / 2;
+                const current = this.arr[xIndex][yIndex];
+                const isDoorway = xIndex == leaveAlone;
+                this.arr[xIndex][yIndex] = !(current || isDoorway);
+                i++;
+            }
+        }
+        else {
+            const leaveAlone = floor(map(rand, 0, 1, y + 1, y + h - 1));
+            for (let yIndex = y; yIndex < y + h; yIndex++) {
+                const xIndex = x + w / 2;
+                const current = this.arr[xIndex][yIndex];
+                const isDoorway = yIndex == leaveAlone;
+                this.arr[xIndex][yIndex] = !(current || isDoorway);
+                i++;
+            }
+        }
+        // print(i);
     }
     Draw(grid = true) {
         push();
         const xDelta = width / this.size;
         const yDelta = height / this.size;
+        fill(0);
         if (grid) {
             for (let x = 0; x <= this.size; x++) {
                 line(x * xDelta, 0, x * xDelta, height);
@@ -43,8 +65,8 @@ class GameBoard {
         }
         for (let x = 0; x < this.size; x++) {
             for (let y = 0; y < this.size; y++) {
-                if (this.arr[x][y]) {
-                    fill(0);
+                if (this.arr[x][y] != fillBool) {
+
                     rect(x * xDelta, y * yDelta, xDelta, yDelta)
                 }
             }

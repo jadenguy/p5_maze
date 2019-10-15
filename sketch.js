@@ -1,12 +1,12 @@
 let b;
 let i = 0;
-const gridSize = 63;
+const gridPower = 5;
 function setup() {
-  createCanvas(windowWidth, windowHeight - 4);
+  createCanvas(windowWidth, windowHeight - 4);  
   background(220);
   stroke(0);
   fill(255);
-  b = new GameBoard(gridSize);
+  b = new GameBoard(gridPower);
 }
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight - 4);
@@ -14,11 +14,11 @@ function windowResized() {
   draw();
 }
 function draw() {
-  i++
+
   b.Draw();
-  if (i % 60 == 0) {
-    b.Bisect();
-  }
+}
+function mouseClicked() {
+  b.Update();
 }
 function clamp(num, min, max) {
   return num <= min ? min : num >= max ? max : num;
