@@ -7,9 +7,6 @@ function setup() {
   stroke(0);
   fill(255);
   b = new GameBoard(gridPower);
-  while (b.Update()) {
-
-  }
 }
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight - 4);
@@ -18,6 +15,7 @@ function windowResized() {
 }
 function draw() {
   b.Draw();
+  b.Update();
 }
 function mouseClicked() {
   b.Update();
