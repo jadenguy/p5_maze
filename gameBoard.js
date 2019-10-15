@@ -15,11 +15,15 @@ class GameBoard {
             // print(w, h, this.size / w* this.size / h);
             for (let x = 0; x < this.size; x += w) {
                 for (let y = 0; y < this.size; y += h) {
-                    print(x, y, w, h, this.bOp);
+                    // print(x, y, w, h, this.bOp);
                     this.Bisect(x, y, w, h);
                 }
             }
             this.bOp++;
+            return true;
+        }
+        else {
+            return false;
         }
         // print(chunk);
     }
@@ -34,9 +38,9 @@ class GameBoard {
                 const yIndex = y + h / 2 - 1;
                 const current = this.arr[xIndex][yIndex];
                 const isDoorway = xIndex == leaveAlone;
-                if (isDoorway && current) {
-                    print("collision")
-                }
+                // if (isDoorway && current) {
+                //     print("collision")
+                // }
                 this.arr[xIndex][yIndex] = !(current || isDoorway);
                 i++;
             }
@@ -47,9 +51,9 @@ class GameBoard {
                 const xIndex = x + w / 2 - 1;
                 const current = this.arr[xIndex][yIndex];
                 const isDoorway = yIndex == leaveAlone;
-                if (isDoorway && current) {
-                    print("collision")
-                }
+                // if (isDoorway && current) {
+                //     print("collision")
+                // }
                 this.arr[xIndex][yIndex] = !(current || isDoorway);
                 i++;
             }
