@@ -11,9 +11,17 @@ class SubBoard {
 class GameBoard {
     constructor(mag) {
         this.size = pow(2, mag) - 1;
-        this.arr = Array.from(Array(this.size), () => new Array(this.size).fill(false));
+        // this.size = mag;
+        this.arr = Array.from(Array(this.size), () => new Array(this.size).fill(true));
         this.queue = [];
-        this.queue.push(new SubBoard(0, 0, this.size + 1, this.size + 1, random() > .5, 0));
+        const largestSquareTile = pow(2, floor(Math.log2(this.size + 1)));
+        print(largestSquareTile);
+        for (let x = 0; x < largestSquareTile-1; x++) {
+            for (let y = 0; y < largestSquareTile-1; y++) {
+                this.arr[x][y]=false;
+            }
+        }
+        this.queue.push(new SubBoard(0, 0, largestSquareTile, largestSquareTile, random() > .5, 0));
     }
     FillMaze() {
         while (this.Subdivide()) { }
@@ -28,9 +36,11 @@ class GameBoard {
             const across = q.across;
             const z = q.z;
             this.Bisect(x, y, w, h, across);
-            if (w * h <= 8) {
-                this.queue.length = 0;
-                return false;
+            if (w * h <= 16) {
+                // pass //
+                // you can't divide a 4 by 2 tile smaller and produce a divider //
+                // you've already divided the 4 by 4 to two 4 x 2
+                // 
             }
             else if (w > h) {
                 this.queue.push(new SubBoard(x, y, w / 2, h, random() > .5, z + 1));
@@ -94,8 +104,8 @@ class GameBoard {
         fill(0);
         for (let x = 0; x < this.arr.length; x++) {
             for (let y = 0; y < this.arr.length; y++) {
-                if (this.arr[x][y]) {
-                    rect(x * xDelta, y * yDelta, xDelta, yDelta)
+                if (this.arr[x][y] == true) {
+                    rect(x * xDelta, y * yDelta, xDelta, yDelta);
                 }
             }
         }

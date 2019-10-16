@@ -3,17 +3,18 @@ let i = 0;
 const gridPower = 6;
 function setup() {
   createCanvas(min(windowWidth, windowHeight), min(windowWidth, windowHeight) - 4);
-  background(220);
+  // background(220);
   noStroke();
   fill(255);
   b = new GameBoard(gridPower);
 }
 function windowResized() {
   resizeCanvas(min(windowWidth, windowHeight), min(windowWidth, windowHeight) - 4);
-  background(220);
+  // background(220);
   draw();
 }
 function draw() {
+  background(220);
   b.Draw();
   b.Subdivide();
 }
